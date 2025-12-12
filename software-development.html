@@ -179,6 +179,10 @@
             position: relative;
             overflow: hidden;
             transition: all 0.5s var(--ease-out-expo);
+
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         .dev-service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient-tech); transform: scaleX(0); transition: transform 0.5s var(--ease-out-expo); }
         .dev-service-card:hover::before { transform: scaleX(1); }
