@@ -1,0 +1,2751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOHESAAR GLOBAL MANAGEMENT INC. | Canadian Investment & Global Trading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --primary: #0a0d14;
+            --primary-elevated: #12161f;
+            --primary-surface: #1a1f2e;
+            --accent-gold: #c9a55c;
+            --accent-gold-light: #e3c87a;
+            --accent-gold-dark: #a68942;
+            --accent-cyan: #5fa8d3;
+            --accent-cyan-light: #8ec5e5;
+            --text-primary: #f8f9fa;
+            --text-secondary: #a0a8b8;
+            --text-muted: #6b7280;
+            --border: rgba(201, 165, 92, 0.12);
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --glow-gold: rgba(201, 165, 92, 0.15);
+            --glow-cyan: rgba(95, 168, 211, 0.1);
+            --gradient-gold: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
+            --gradient-text: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-cyan) 50%, var(--accent-gold-light) 100%);
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Noise texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.025;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        ::selection {
+            background: var(--accent-gold);
+            color: var(--primary);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 clamp(1.5rem, 5vw, 3rem);
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .section-label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 2rem;
+            height: 1px;
+            background: var(--accent-gold);
+        }
+
+        .gradient-text {
+            background: var(--gradient-text);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientFlow 8s ease infinite;
+        }
+
+        @keyframes gradientFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 clamp(1.5rem, 5vw, 3rem);
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        header.scrolled {
+            background: rgba(10, 13, 20, 0.92);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .nav-wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 90px;
+            transition: height 0.4s var(--ease-out-expo);
+        }
+
+        header.scrolled .nav-wrapper {
+            height: 72px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo-mark {
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            transition: transform 0.4s var(--ease-out-expo);
+        }
+
+        .brand:hover .logo-mark {
+            transform: rotate(-5deg) scale(1.05);
+        }
+
+        .logo-type {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+        }
+
+        .logo-name {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: 0.02em;
+        }
+
+        .logo-sub {
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gradient-gold);
+            transition: width 0.4s var(--ease-out-expo);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.4s var(--ease-out-expo);
+            text-decoration: none;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--gradient-gold);
+            color: var(--primary);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--accent-gold-light), var(--accent-gold));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-primary span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px -8px rgba(201, 165, 92, 0.4);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-primary);
+            border-color: var(--accent-gold);
+            background: rgba(201, 165, 92, 0.05);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 0 6rem;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 60% at 20% 40%, var(--glow-gold) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 60%, var(--glow-cyan) 0%, transparent 50%),
+                linear-gradient(180deg, var(--primary) 0%, var(--primary-elevated) 100%);
+        }
+
+        .hero-grid-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(var(--border-subtle) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 70% 60% at center, black 20%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse 70% 60% at center, black 20%, transparent 70%);
+            opacity: 0.5;
+        }
+
+        .hero-floating-element {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero-floating-element:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            background: var(--glow-gold);
+            top: 10%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+
+        .hero-floating-element:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            background: var(--glow-cyan);
+            bottom: 20%;
+            left: 5%;
+            animation-delay: -7s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 5rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            max-width: 640px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem 0.5rem 0.5rem;
+            background: rgba(201, 165, 92, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            margin-bottom: 2rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 0.02em;
+        }
+
+        .hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.75rem, 5vw, 4rem);
+            font-weight: 500;
+            line-height: 1.1;
+            margin-bottom: 1.75rem;
+            color: var(--text-primary);
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            background: var(--gradient-text);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientFlow 8s ease infinite;
+        }
+
+        .hero-lede {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .hero-meta-item i {
+            color: var(--accent-gold);
+            font-size: 0.7rem;
+        }
+
+        /* Hero Card */
+        .hero-card {
+            background: linear-gradient(135deg, var(--primary-surface) 0%, var(--primary-elevated) 100%);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .hero-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, var(--glow-gold) 0%, transparent 60%);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .hero-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-card-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-gold);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--primary);
+        }
+
+        .hero-card h3 {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .hero-card > p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .hero-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-stat {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 1.25rem;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .hero-stat:hover {
+            background: rgba(201, 165, 92, 0.03);
+            border-color: var(--border);
+            transform: translateY(-2px);
+        }
+
+        .hero-stat-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-stat-value {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .hero-card-disclaimer {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-subtle);
+            position: relative;
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats-section {
+            padding: 4rem 0;
+            background: var(--primary-elevated);
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, var(--glow-gold), transparent);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            position: relative;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            position: relative;
+        }
+
+        .stat-card:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 60%;
+            width: 1px;
+            background: linear-gradient(180deg, transparent, var(--border), transparent);
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 500;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .stat-bar {
+            width: 60px;
+            height: 3px;
+            background: var(--border-subtle);
+            border-radius: 2px;
+            margin: 1rem auto 0;
+            overflow: hidden;
+        }
+
+        .stat-bar-fill {
+            height: 100%;
+            background: var(--gradient-gold);
+            border-radius: 2px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 1.5s var(--ease-out-expo);
+        }
+
+        .stat-card.visible .stat-bar-fill {
+            transform: scaleX(1);
+        }
+
+        /* ===== SECTION STYLES ===== */
+        section {
+            padding: 7rem 0;
+            position: relative;
+        }
+
+        .section-header {
+            max-width: 720px;
+            margin: 0 auto 4rem;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            margin-bottom: 1.25rem;
+        }
+
+        .section-header p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* ===== ABOUT SECTION ===== */
+        #about {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-elevated) 100%);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .about-content p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .about-list li {
+            display: flex;
+            gap: 1rem;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 0.95rem;
+        }
+
+        .about-list li:first-child {
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .about-list-label {
+            color: var(--text-muted);
+            min-width: 140px;
+            font-weight: 500;
+        }
+
+        .about-list-value {
+            color: var(--text-primary);
+        }
+
+        /* ===== SERVICES GRID ===== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, var(--primary-surface) 0%, var(--primary-elevated) 100%);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s var(--ease-out-expo);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-gold);
+            transform: scaleX(0);
+            transition: transform 0.5s var(--ease-out-expo);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--border);
+            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(201, 165, 92, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .service-card:hover .service-icon {
+            background: var(--gradient-gold);
+            color: var(--primary);
+            transform: rotate(-5deg) scale(1.05);
+        }
+
+        .service-card h3 {
+            font-size: 1.35rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .service-card > p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .service-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .service-list li::before {
+            content: '→';
+            color: var(--accent-gold);
+            font-size: 0.8rem;
+            margin-top: 0.15rem;
+        }
+
+        /* ===== SOFTWARE & WEBSITE SERVICES SECTION ===== */
+        .software-section {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-elevated) 50%, var(--primary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .software-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse 60% 40% at 30% 20%, rgba(95, 168, 211, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 70% 80%, rgba(201, 165, 92, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .software-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 4rem;
+        }
+
+        .software-card {
+            background: linear-gradient(135deg, var(--primary-surface) 0%, var(--primary-elevated) 100%);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s var(--ease-out-expo);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .software-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-gold);
+            transform: scaleX(0);
+            transition: transform 0.5s var(--ease-out-expo);
+        }
+
+        .software-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .software-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--border);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        .software-card.featured-software {
+            background: linear-gradient(135deg, rgba(201, 165, 92, 0.08), var(--primary-elevated));
+            border-color: var(--border);
+            grid-row: span 2;
+        }
+
+        .software-card.featured-software::before {
+            transform: scaleX(1);
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan), var(--accent-gold));
+        }
+
+        .software-card-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--gradient-gold);
+            color: var(--primary);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 0.4rem 0.8rem;
+            border-radius: 100px;
+        }
+
+        .software-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(201, 165, 92, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .software-card:hover .software-icon {
+            background: var(--gradient-gold);
+            color: var(--primary);
+            transform: scale(1.1) rotate(-5deg);
+            box-shadow: 0 10px 30px rgba(201, 165, 92, 0.3);
+        }
+
+        .software-card h3 {
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .software-card > p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .software-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .software-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .software-features li:last-child {
+            border-bottom: none;
+        }
+
+        .software-features li i {
+            color: var(--accent-gold);
+            font-size: 0.75rem;
+            width: 16px;
+            text-align: center;
+        }
+
+        .software-card .btn {
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .software-cta {
+            background: linear-gradient(135deg, var(--primary-surface) 0%, var(--primary-elevated) 100%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .software-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .software-cta::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--glow-gold) 0%, transparent 60%);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .software-cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .software-cta-content h3 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .software-cta-content p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .software-cta .btn {
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+
+        /* ===== PROCESS TIMELINE ===== */
+        .process-section {
+            background: var(--primary-elevated);
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 32px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(180deg, var(--accent-gold), var(--accent-cyan), var(--accent-gold));
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-marker {
+            width: 64px;
+            height: 64px;
+            background: var(--primary-surface);
+            border: 2px solid var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent-gold);
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .timeline-item:hover .timeline-marker {
+            background: var(--gradient-gold);
+            color: var(--primary);
+            transform: scale(1.1);
+            box-shadow: 0 0 30px var(--glow-gold);
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-top: 1rem;
+        }
+
+        .timeline-content h4 {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ===== SECTORS SECTION ===== */
+        .sectors-section {
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-elevated) 50%, var(--primary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sectors-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse 50% 40% at 10% 50%, var(--glow-gold) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 40% at 90% 50%, var(--glow-cyan) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .sectors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .sector-card {
+            background: linear-gradient(135deg, var(--primary-surface) 0%, var(--primary-elevated) 100%);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            transition: all 0.5s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sector-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(201, 165, 92, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .sector-card:hover::before {
+            opacity: 1;
+        }
+
+        .sector-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--border);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+        }
+
+        .sector-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(201, 165, 92, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            color: var(--accent-gold);
+            flex-shrink: 0;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .sector-card:hover .sector-icon {
+            background: var(--gradient-gold);
+            color: var(--primary);
+            transform: rotate(-5deg);
+        }
+
+        .sector-content h3 {
+            font-size: 1.1rem;
+            font-family: var(--font-body);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .sector-content p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .sector-card.featured {
+            background: linear-gradient(135deg, rgba(201, 165, 92, 0.08), var(--primary-elevated));
+            border-color: var(--border);
+        }
+
+        /* ===== VALUES SECTION ===== */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .value-card {
+            background: linear-gradient(135deg, var(--primary-surface) 0%, var(--primary-elevated) 100%);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.5s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: var(--gradient-gold);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .value-card:hover::before {
+            opacity: 1;
+        }
+
+        .value-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--border);
+            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .value-label {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 500;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        .value-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ===== PROFILE SECTION ===== */
+        #profile {
+            background: var(--primary-elevated);
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, var(--primary-surface) 0%, var(--primary-elevated) 100%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .profile-card::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--glow-gold) 0%, transparent 60%);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .profile-intro p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .profile-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .profile-row:hover {
+            background: rgba(201, 165, 92, 0.03);
+            border-color: var(--border);
+        }
+
+        .profile-row-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .profile-row-value {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            text-align: right;
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        #contact {
+            background: linear-gradient(180deg, var(--primary-elevated) 0%, var(--primary) 100%);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 4rem;
+        }
+
+        .contact-form-card {
+            background: linear-gradient(135deg, var(--primary-surface) 0%, var(--primary-elevated) 100%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .contact-form-card h3 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-form-card > p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            background: rgba(201, 165, 92, 0.03);
+            box-shadow: 0 0 0 3px rgba(201, 165, 92, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .form-note {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-info-card {
+            background: linear-gradient(135deg, var(--primary-surface) 0%, var(--primary-elevated) 100%);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .contact-info-card h3 {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info-card > p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .counterparty-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .counterparty-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .counterparty-list li:last-child {
+            border-bottom: none;
+        }
+
+        .counterparty-list li::before {
+            content: '●';
+            color: var(--accent-gold);
+            font-size: 0.5rem;
+            margin-top: 0.4rem;
+        }
+
+        .contact-notice {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--primary);
+            border-top: 1px solid var(--border-subtle);
+            padding: 5rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 2fr;
+            gap: 5rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-brand .logo-mark {
+            width: 36px;
+            height: 36px;
+        }
+
+        .footer-intro {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 1rem 1.25rem;
+            background: var(--primary-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        .newsletter-form input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .footer-column h5 {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-column a {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.4rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--text-primary);
+            padding-left: 0.5rem;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s var(--ease-out-expo);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-stagger > * {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s var(--ease-out-expo);
+        }
+
+        .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.visible > *:nth-child(7) { transition-delay: 0.6s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.visible > *:nth-child(8) { transition-delay: 0.7s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.visible > *:nth-child(9) { transition-delay: 0.8s; opacity: 1; transform: translateY(0); }
+        .reveal-stagger.visible > *:nth-child(10) { transition-delay: 0.9s; opacity: 1; transform: translateY(0); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .software-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .software-card.featured-software {
+                grid-row: span 1;
+            }
+
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .profile-card {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .software-cta {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .nav-cta {
+                display: none;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+
+            .services-grid,
+            .values-grid,
+            .software-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card:not(:last-child)::after {
+                display: none;
+            }
+
+            .timeline::before {
+                left: 24px;
+            }
+
+            .timeline-marker {
+                width: 48px;
+                height: 48px;
+                font-size: 1rem;
+            }
+
+            .timeline-item {
+                gap: 1.5rem;
+            }
+
+            .footer-links {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 5rem 0;
+            }
+
+            .hero {
+                padding: 7rem 0 4rem;
+            }
+
+            .hero-stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card {
+                padding: 2rem;
+            }
+
+            .contact-form-card {
+                padding: 2rem;
+            }
+
+            .footer-links {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+
+        /* Mobile nav menu */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 13, 20, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 999;
+            padding: 6rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .mobile-nav.active {
+            display: flex;
+        }
+
+        .mobile-nav a {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav a:hover {
+            color: var(--accent-gold);
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="nav-wrapper">
+            <a href="#" class="brand">
+                <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#5fa8d3" />
+                            <stop offset="50%" stop-color="#c9a55c" />
+                            <stop offset="100%" stop-color="#e3c87a" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="24" cy="24" r="19" fill="none" stroke="url(#logoGrad)" stroke-width="2" />
+                    <line x1="24" y1="5" x2="24" y2="43" stroke="url(#logoGrad)" stroke-width="1.5" stroke-linecap="round" />
+                    <line x1="5" y1="24" x2="43" y2="24" stroke="url(#logoGrad)" stroke-width="1.2" stroke-linecap="round" />
+                    <path d="M11 31 L21 21 L27 27 L37 16" fill="none" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M34 16 H38 V20" fill="none" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div class="logo-type">
+                    <span class="logo-name">KOHESAAR</span>
+                    <span class="logo-sub">GLOBAL MANAGEMENT INC.</span>
+                </div>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#about">About</a>
+                <a href="#services">Divisions</a>
+                <a href="#software">Software</a>
+                <a href="#process">Process</a>
+                <a href="#sectors">Sectors</a>
+                <a href="#values">How We Work</a>
+            </nav>
+
+            <div class="nav-cta">
+                <a href="#profile" class="btn btn-ghost">Corporate Profile</a>
+                <a href="#contact" class="btn btn-primary"><span>B2B Enquiry</span></a>
+            </div>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" id="mobileNavClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="#about" class="mobile-link">About</a>
+        <a href="#services" class="mobile-link">Divisions</a>
+        <a href="#software" class="mobile-link">Software</a>
+        <a href="#process" class="mobile-link">Process</a>
+        <a href="#sectors" class="mobile-link">Sectors</a>
+        <a href="#values" class="mobile-link">How We Work</a>
+        <a href="#profile" class="mobile-link">Profile</a>
+        <a href="#contact" class="mobile-link">Contact</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="hero-grid-pattern"></div>
+            <div class="hero-floating-element"></div>
+            <div class="hero-floating-element"></div>
+        </div>
+
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-badge">
+                        <span class="hero-badge-dot"></span>
+                        Private Investment · Import · Export · B2B Distribution
+                    </div>
+
+                    <h1>Private capital and <em>structured trade</em> for the Canada–U.S. market</h1>
+
+                    <p class="hero-lede">
+                        KOHESAAR GLOBAL MANAGEMENT INC. is a Canadian private investment, import/export, and 
+                        B2B distribution firm helping manufacturers access the Canadian and U.S. markets through 
+                        structured sourcing, distribution, and market-entry programs.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#services" class="btn btn-primary"><span>Explore Divisions</span></a>
+                        <a href="#about" class="btn btn-ghost">How We Operate</a>
+                    </div>
+
+                    <div class="hero-meta">
+                        <div class="hero-meta-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Ontario corporation since 2017</span>
+                        </div>
+                        <div class="hero-meta-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>B2B only · No public financial services</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-card">
+                    <div class="hero-card-header">
+                        <div class="hero-card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Investment meets trade</h3>
+                    </div>
+
+                    <p>
+                        We deploy our own capital into trade-backed ventures, inventory programs, and long-term 
+                        commercial partnerships, while managing import, export and distribution operations in-house.
+                    </p>
+
+                    <div class="hero-stats-grid">
+                        <div class="hero-stat">
+                            <div class="hero-stat-label">Incorporated</div>
+                            <div class="hero-stat-value">July 31, 2017 · Ontario</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-label">Core Focus</div>
+                            <div class="hero-stat-value">North American trade & market-entry</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-label">Structure</div>
+                            <div class="hero-stat-value">Private capital · Class A shares</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-label">Activities</div>
+                            <div class="hero-stat-value">Import · Export · Distribution</div>
+                        </div>
+                    </div>
+
+                    <p class="hero-card-disclaimer">
+                        KOHESAAR invests only its own capital and does not provide public portfolio management, 
+                        investment advice, consumer financial services, or immigration services.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid reveal-stagger">
+                <div class="stat-card">
+                    <span class="stat-number" data-count="7">0</span>
+                    <span class="stat-label">Years in Operation</span>
+                    <div class="stat-bar"><div class="stat-bar-fill"></div></div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-count="50">0</span>
+                    <span class="stat-label">Partner Factories</span>
+                    <div class="stat-bar"><div class="stat-bar-fill"></div></div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" data-count="1000">0</span>
+                    <span class="stat-label">Products Sourced</span>
+                    <div class="stat-bar"><div class="stat-bar-fill"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">About Us</span>
+                <h2 class="gradient-text">About KOHESAAR</h2>
+                <p>
+                    Incorporated under the Ontario Business Corporations Act in 2017, KOHESAAR GLOBAL MANAGEMENT INC. 
+                    operates as a private investment and B2B distribution company with the flexibility to run 
+                    multi-category trade programs across North America.
+                </p>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-content reveal">
+                    <p>
+                        We partner with verified suppliers, manufacturers and logistics providers to build reliable 
+                        routes into Canada and the United States. Our team focuses on sectors where we understand 
+                        manufacturing bases, quality expectations and regulatory requirements.
+                    </p>
+                    <p>
+                        KOHESAAR deploys its own capital into commercial ventures, inventory, and supply-chain 
+                        opportunities that align with a long-term, relationship-driven strategy. We are not a broker 
+                        of other people's money — we stand behind the decisions we make.
+                    </p>
+                </div>
+
+                <ul class="about-list reveal">
+                    <li>
+                        <span class="about-list-label">Legal form</span>
+                        <span class="about-list-value">Ontario Business Corporation (No. 2590129)</span>
+                    </li>
+                    <li>
+                        <span class="about-list-label">Jurisdiction</span>
+                        <span class="about-list-value">Province of Ontario, Canada</span>
+                    </li>
+                    <li>
+                        <span class="about-list-label">Core markets</span>
+                        <span class="about-list-value">Canada & United States (North America)</span>
+                    </li>
+                    <li>
+                        <span class="about-list-label">Clients</span>
+                        <span class="about-list-value">Manufacturers, brand owners, distributors & B2B buyers</span>
+                    </li>
+                    <li>
+                        <span class="about-list-label">Capital</span>
+                        <span class="about-list-value">Company-owned; no public advisory or portfolio management</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">What We Do</span>
+                <h2 class="gradient-text">Core Operating Divisions</h2>
+                <p>
+                    Three tightly linked pillars: private investment, global trade, and North American market-entry 
+                    support for international brands.
+                </p>
+            </div>
+
+            <div class="services-grid reveal-stagger">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3>Private Investment</h3>
+                    <p>
+                        Deployment of company-owned capital into supply-chain opportunities, inventory programs, 
+                        and commercial ventures.
+                    </p>
+                    <ul class="service-list">
+                        <li>Equity and partnership participation</li>
+                        <li>Inventory and working-capital support</li>
+                        <li>Long-term supply-chain investments</li>
+                        <li>Focus on real, cash-flowing businesses</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h3>Import, Export & Distribution</h3>
+                    <p>
+                        Long-term sourcing and distribution programs for Canadian and U.S. wholesalers, distributors, 
+                        and retailers.
+                    </p>
+                    <ul class="service-list">
+                        <li>Supplier identification & verification</li>
+                        <li>Contract manufacturing & private label</li>
+                        <li>Route-to-market design and fulfilment</li>
+                        <li>Multi-category, scalable B2B programs</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>North American Market-Entry</h3>
+                    <p>
+                        Practical assistance for manufacturers aiming to enter or expand in the Canadian or U.S. market.
+                    </p>
+                    <ul class="service-list">
+                        <li>Product & category positioning input</li>
+                        <li>Introductions to distributors & retailers</li>
+                        <li>Launch-phase logistics & supply-chain strategy</li>
+                        <li>No legal, immigration, or retail financial advice</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="process-section">
+
+    <!-- Software & Website Services Section -->
+    <section id="software" class="software-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Digital Solutions</span>
+                <h2 class="gradient-text">Software & Website Services</h2>
+                <p>
+                    End-to-end digital solutions for businesses looking to establish or enhance their online presence. 
+                    From custom software development to complete website builds, we deliver technology that drives results.
+                </p>
+            </div>
+
+            <div class="software-grid reveal-stagger">
+                <div class="software-card featured-software">
+                    <div class="software-card-badge">Most Popular</div>
+                    <div class="software-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Website Development</h3>
+                    <p>Professional, responsive websites built for performance and conversion.</p>
+                    <ul class="software-features">
+                        <li><i class="fas fa-check"></i> Custom design & branding</li>
+                        <li><i class="fas fa-check"></i> Mobile-first responsive layouts</li>
+                        <li><i class="fas fa-check"></i> SEO optimization</li>
+                        <li><i class="fas fa-check"></i> Fast loading & performance</li>
+                        <li><i class="fas fa-check"></i> Content management systems</li>
+                        <li><i class="fas fa-check"></i> Analytics integration</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary"><span>Get Started</span></a>
+                </div>
+
+                <div class="software-card">
+                    <div class="software-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Custom Software</h3>
+                    <p>Tailored applications built to solve your specific business challenges.</p>
+                    <ul class="software-features">
+                        <li><i class="fas fa-check"></i> Web applications</li>
+                        <li><i class="fas fa-check"></i> Business automation</li>
+                        <li><i class="fas fa-check"></i> API development</li>
+                        <li><i class="fas fa-check"></i> Database solutions</li>
+                        <li><i class="fas fa-check"></i> Cloud deployment</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-ghost">Learn More</a>
+                </div>
+
+                <div class="software-card">
+                    <div class="software-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>E-Commerce Solutions</h3>
+                    <p>Complete online stores with secure payments and inventory management.</p>
+                    <ul class="software-features">
+                        <li><i class="fas fa-check"></i> Shopify & WooCommerce</li>
+                        <li><i class="fas fa-check"></i> Payment gateway setup</li>
+                        <li><i class="fas fa-check"></i> Inventory management</li>
+                        <li><i class="fas fa-check"></i> Order fulfillment</li>
+                        <li><i class="fas fa-check"></i> Customer portals</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-ghost">Learn More</a>
+                </div>
+
+                <div class="software-card">
+                    <div class="software-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Apps</h3>
+                    <p>Native and cross-platform mobile applications for iOS and Android.</p>
+                    <ul class="software-features">
+                        <li><i class="fas fa-check"></i> iOS & Android apps</li>
+                        <li><i class="fas fa-check"></i> React Native / Flutter</li>
+                        <li><i class="fas fa-check"></i> App store deployment</li>
+                        <li><i class="fas fa-check"></i> Push notifications</li>
+                        <li><i class="fas fa-check"></i> Offline functionality</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-ghost">Learn More</a>
+                </div>
+
+                <div class="software-card">
+                    <div class="software-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>UI/UX Design</h3>
+                    <p>User-centered design that creates intuitive, engaging digital experiences.</p>
+                    <ul class="software-features">
+                        <li><i class="fas fa-check"></i> User research & testing</li>
+                        <li><i class="fas fa-check"></i> Wireframing & prototyping</li>
+                        <li><i class="fas fa-check"></i> Visual design systems</li>
+                        <li><i class="fas fa-check"></i> Brand identity</li>
+                        <li><i class="fas fa-check"></i> Design handoff</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-ghost">Learn More</a>
+                </div>
+
+                <div class="software-card">
+                    <div class="software-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>Maintenance & Support</h3>
+                    <p>Ongoing technical support, updates, and performance optimization.</p>
+                    <ul class="software-features">
+                        <li><i class="fas fa-check"></i> 24/7 monitoring</li>
+                        <li><i class="fas fa-check"></i> Security updates</li>
+                        <li><i class="fas fa-check"></i> Performance tuning</li>
+                        <li><i class="fas fa-check"></i> Backup & recovery</li>
+                        <li><i class="fas fa-check"></i> Technical support</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-ghost">Learn More</a>
+                </div>
+            </div>
+
+            <div class="software-cta reveal">
+                <div class="software-cta-content">
+                    <h3>Ready to build something great?</h3>
+                    <p>Let's discuss your project requirements and create a solution tailored to your business needs.</p>
+                </div>
+                <a href="#contact" class="btn btn-primary"><span>Start Your Project</span></a>
+            </div>
+        </div>
+    </section>
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Our Approach</span>
+                <h2 class="gradient-text">Our Process</h2>
+                <p>Structured approach to building scalable, compliant B2B programs.</p>
+            </div>
+
+            <div class="timeline reveal">
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h4>Discovery & Assessment</h4>
+                        <p>Initial consultation to understand your products, markets, and objectives. We evaluate alignment with our operational capabilities and investment criteria.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h4>Feasibility Analysis</h4>
+                        <p>Market research, regulatory review, and supply-chain assessment across Canada & U.S. We identify potential barriers and develop mitigation strategies.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h4>Pilot Program</h4>
+                        <p>Structured pilots with limited SKUs, controlled volumes, and documented performance. Real-world validation before full commitment.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <h4>Scale & Optimize</h4>
+                        <p>Scale-up of successful programs with continuous improvement and risk management. Long-term partnership development and expansion.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sectors Section -->
+    <section id="sectors" class="sectors-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Industries</span>
+                <h2 class="gradient-text">Industry Sectors Served</h2>
+                <p>
+                    KOHESAAR operates across a broad range of industries to support multi-category, scalable B2B 
+                    programs for manufacturers, distributors, and brand owners.
+                </p>
+            </div>
+
+            <div class="sectors-grid reveal-stagger">
+                <div class="sector-card">
+                    <div class="sector-icon"><i class="fas fa-stethoscope"></i></div>
+                    <div class="sector-content">
+                        <h3>Medical Devices & Healthcare Equipment</h3>
+                        <p>Instruments, non-powered devices and related healthcare equipment supplied as manufactured goods.</p>
+                    </div>
+                </div>
+
+                <div class="sector-card">
+                    <div class="sector-icon"><i class="fas fa-tools"></i></div>
+                    <div class="sector-content">
+                        <h3>Tools, Hardware & Industrial Equipment</h3>
+                        <p>Hand tools, workshop equipment, and light industrial supplies for professional use.</p>
+                    </div>
+                </div>
+
+                <div class="sector-card">
+                    <div class="sector-icon"><i class="fas fa-cogs"></i></div>
+                    <div class="sector-content">
+                        <h3>Machinery & Manufacturing Supplies</h3>
+                        <p>Selected machinery, components and production support items for manufacturing operations.</p>
+                    </div>
+                </div>
+
+                <div class="sector-card">
+                    <div class="sector-icon"><i class="fas fa-running"></i></div>
+                    <div class="sector-content">
+                        <h3>Sports, Fitness & Outdoor Equipment</h3>
+                        <p>Training aids, protective gear and general sports/outdoor goods for active lifestyles.</p>
+                    </div>
+                </div>
+
+                <div class="sector-card featured">
+                    <div class="sector-icon"><i class="fas fa-tshirt"></i></div>
+                    <div class="sector-content">
+                        <h3>Fashion, Accessories & Lifestyle Goods</h3>
+                        <p>Apparel accessories, jewellery and lifestyle products for modern consumers.</p>
+                    </div>
+                </div>
+
+                <div class="sector-card">
+                    <div class="sector-icon"><i class="fas fa-utensils"></i></div>
+                    <div class="sector-content">
+                        <h3>Kitchenware, Household & Home Supplies</h3>
+                        <p>Everyday kitchen, storage and household accessories for residential and commercial use.</p>
+                    </div>
+                </div>
+
+                <div class="sector-card">
+                    <div class="sector-icon"><i class="fas fa-laptop"></i></div>
+                    <div class="sector-content">
+                        <h3>Consumer Electronics & Smart Accessories</h3>
+                        <p>Small devices, peripherals and connected accessories for the digital lifestyle.</p>
+                    </div>
+                </div>
+
+                <div class="sector-card">
+                    <div class="sector-icon"><i class="fas fa-box-open"></i></div>
+                    <div class="sector-content">
+                        <h3>Packaging, Disposables & Food-Service</h3>
+                        <p>Consumer and food-service packaging and related disposables for various industries.</p>
+                    </div>
+                </div>
+
+                <div class="sector-card">
+                    <div class="sector-icon"><i class="fas fa-car"></i></div>
+                    <div class="sector-content">
+                        <h3>Automotive & Mobility Accessories</h3>
+                        <p>Aftermarket and mobility-related accessories for vehicles and transportation.</p>
+                    </div>
+                </div>
+
+                <div class="sector-card featured">
+                    <div class="sector-icon"><i class="fas fa-shopping-cart"></i></div>
+                    <div class="sector-content">
+                        <h3>General Merchandise & Program Products</h3>
+                        <p>Seasonal, promotional or program-specific ranges agreed with buyers.</p>
+                    </div>
+                </div>
+
+                <div class="sector-card featured">
+                    <div class="sector-icon"><i class="fas fa-code"></i></div>
+                    <div class="sector-content">
+                        <h3>Software & Web Development</h3>
+                        <p>Custom websites, web applications, mobile apps and digital solutions for businesses.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section id="values">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Our Philosophy</span>
+                <h2 class="gradient-text">How We Work</h2>
+                <p>
+                    KOHESAAR operates with a long-term, relationship-focused approach that prioritizes transparency, 
+                    practicality and compliance. Programs start with structured pilots before any scale-up.
+                </p>
+            </div>
+
+            <div class="values-grid reveal-stagger">
+                <div class="value-card">
+                    <div class="value-label">Integrity</div>
+                    <p>Direct, transparent communication. Clear contracts, realistic expectations and zero tolerance for hidden terms.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-label">Reliability</div>
+                    <p>Consistent fills, predictable lead times and stable quality over chasing the absolute lowest-cost supplier.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-label">Partnership</div>
+                    <p>Long-term relationships with manufacturers and buyers matter more than one-off wins.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-label">Compliance</div>
+                    <p>Operations structured around applicable Canadian and U.S. trade, customs and commercial regulations.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-label">Discipline</div>
+                    <p>Capital and capacity committed only where risk-return and operational fit make sense.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-label">Long-Term View</div>
+                    <p>All decisions taken with a multi-year horizon: reputational impact, regulatory safety and durability.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section id="profile">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Corporate Information</span>
+                <h2 class="gradient-text">Legal & Corporate Profile</h2>
+                <p>
+                    A concise snapshot of KOHESAAR GLOBAL MANAGEMENT INC. for banking, compliance and 
+                    counterparties performing due diligence.
+                </p>
+            </div>
+
+            <div class="profile-card reveal">
+                <div class="profile-intro">
+                    <p>
+                        KOHESAAR GLOBAL MANAGEMENT INC. is a Canadian-registered corporation with unlimited Class A 
+                        shares and nearly a decade of operating history. All investment activity is conducted using 
+                        company-owned capital. Detailed corporate documents — including Articles of Incorporation and 
+                        official Corporation Profile Report — are available to counterparties conducting formal due diligence.
+                    </p>
+                </div>
+
+                <div class="profile-details">
+                    <div class="profile-row">
+                        <span class="profile-row-label">Ontario Corporation Number</span>
+                        <span class="profile-row-value">2590129</span>
+                    </div>
+                    <div class="profile-row">
+                        <span class="profile-row-label">Date of incorporation</span>
+                        <span class="profile-row-value">31 July 2017</span>
+                    </div>
+                    <div class="profile-row">
+                        <span class="profile-row-label">Jurisdiction</span>
+                        <span class="profile-row-value">Province of Ontario, Canada</span>
+                    </div>
+                    <div class="profile-row">
+                        <span class="profile-row-label">Corporate structure</span>
+                        <span class="profile-row-value">Private corporation (Class A shares)</span>
+                    </div>
+                    <div class="profile-row">
+                        <span class="profile-row-label">Primary Markets</span>
+                        <span class="profile-row-value">Canada & United States</span>
+                    </div>
+                    <div class="profile-row">
+                        <span class="profile-row-label">Business Model</span>
+                        <span class="profile-row-value">B2B investment, sourcing & distribution</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Get In Touch</span>
+                <h2 class="gradient-text">Start a Conversation</h2>
+                <p>
+                    Whether you're a manufacturer looking at Canada/U.S. entry, or a distributor seeking 
+                    structured supply from our sectors, we're open to a direct, practical discussion.
+                </p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-form-card reveal">
+                    <h3>B2B Enquiry Form</h3>
+                    <p>Share a brief outline of who you are and what you're looking for. A member of the KOHESAAR team will review and respond.</p>
+
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input id="name" type="text" placeholder="Your full name" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <input id="company" type="text" placeholder="Company / organization" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input id="email" type="email" placeholder="you@company.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="interest">Primary Interest</label>
+                            <select id="interest" required>
+                                <option value="">Select one</option>
+                                <option>Import / distribution partnership</option>
+                                <option>Brand entry into Canada / USA</option>
+                                <option>Private investment / commercial venture</option>
+                                <option>Other B2B collaboration</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Overview</label>
+                            <textarea id="message" placeholder="Brief description of products, volumes, timelines or opportunity." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full"><span>Submit Enquiry</span></button>
+                        <p class="form-note">
+                            Please do not send confidential information through this form. A formal NDA can be arranged 
+                            after initial contact where appropriate.
+                        </p>
+                    </form>
+                </div>
+
+                <div class="contact-info reveal">
+                    <div class="contact-info-card">
+                        <h3>Direct Information</h3>
+                        <p>
+                            Detailed corporate documents — including Articles of Incorporation and official 
+                            Corporation Profile Report — are available to counterparties conducting formal due diligence.
+                        </p>
+                    </div>
+
+                    <div class="contact-info-card">
+                        <h3>Typical Counterparties</h3>
+                        <ul class="counterparty-list">
+                            <li>Overseas manufacturers seeking a North American partner</li>
+                            <li>Canadian & U.S. distributors looking for structured sourcing</li>
+                            <li>Brand owners exploring multi-year category programs</li>
+                        </ul>
+                        <p class="contact-notice">
+                            Meetings are scheduled by appointment only. KOHESAAR does not operate walk-in retail 
+                            locations and does not serve individual investors.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-brand">
+                        <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="logoGradFooter" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#5fa8d3" />
+                                    <stop offset="50%" stop-color="#c9a55c" />
+                                    <stop offset="100%" stop-color="#e3c87a" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="24" cy="24" r="19" fill="none" stroke="url(#logoGradFooter)" stroke-width="2" />
+                            <line x1="24" y1="5" x2="24" y2="43" stroke="url(#logoGradFooter)" stroke-width="1.5" stroke-linecap="round" />
+                            <line x1="5" y1="24" x2="43" y2="24" stroke="url(#logoGradFooter)" stroke-width="1.2" stroke-linecap="round" />
+                            <path d="M11 31 L21 21 L27 27 L37 16" fill="none" stroke="url(#logoGradFooter)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M34 16 H38 V20" fill="none" stroke="url(#logoGradFooter)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div class="logo-type">
+                            <span class="logo-name">KOHESAAR</span>
+                            <span class="logo-sub">GLOBAL MANAGEMENT INC.</span>
+                        </div>
+                    </div>
+                    <p class="footer-intro">
+                        Private investment & B2B distribution company. Structured trade programs for Canada & United States.
+                    </p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your professional email" required />
+                        <button type="submit" class="btn btn-primary"><span>Subscribe</span></button>
+                    </form>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Company</h5>
+                        <a href="#about">About Us</a>
+                        <a href="#profile">Corporate Profile</a>
+                        <a href="#values">How We Work</a>
+                    </div>
+                    <div class="footer-column">
+                        <h5>Services</h5>
+                        <a href="#services">Divisions</a>
+                        <a href="#software">Software & Web</a>
+                        <a href="#sectors">Industry Sectors</a>
+                        <a href="#process">Our Process</a>
+                    </div>
+                    <div class="footer-column">
+                        <h5>Connect</h5>
+                        <a href="#contact">Contact</a>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div>© <span id="year">2024</span> KOHESAAR GLOBAL MANAGEMENT INC. All rights reserved.</div>
+                <div>Private investment & global trading · Canada & United States</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Mobile navigation
+        const navToggle = document.getElementById('navToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavClose = document.getElementById('mobileNavClose');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        navToggle?.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        mobileNavClose?.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Scroll reveal animations
+        const revealObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            },
+            { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+        );
+
+        document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // Counter animation
+        const counterObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target.querySelector('.stat-number');
+                        if (counter && !counter.classList.contains('counted')) {
+                            counter.classList.add('counted');
+                            const target = parseInt(counter.getAttribute('data-count'));
+                            const duration = 2000;
+                            const step = target / (duration / 16);
+                            let current = 0;
+
+                            const updateCounter = () => {
+                                current += step;
+                                if (current < target) {
+                                    counter.textContent = Math.floor(current);
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    counter.textContent = target;
+                                }
+                            };
+
+                            updateCounter();
+                        }
+                        entry.target.classList.add('visible');
+                    }
+                });
+            },
+            { threshold: 0.5 }
+        );
+
+        document.querySelectorAll('.stat-card').forEach(card => {
+            counterObserver.observe(card);
+        });
+
+        // Form handling
+        document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<span>Sending...</span>';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Thank you for your enquiry. A member of our team will be in touch shortly.');
+                this.reset();
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 1500);
+        });
+
+        // Newsletter form
+        document.querySelector('.newsletter-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = this.querySelector('input');
+            const btn = this.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            if (input.value && input.value.includes('@')) {
+                btn.innerHTML = '<span>Subscribed!</span>';
+                btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    this.reset();
+                }, 2000);
+            }
+        });
+
+        // Footer year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
